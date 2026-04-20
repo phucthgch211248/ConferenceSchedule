@@ -5,9 +5,9 @@
 {% block body %}
     <div class="mx-auto w-full max-w-2xl">
         <div class="mb-6">
-            <h1 class="text-2xl font-bold">Register User to Session</h1>
-            <p class="mt-1 text-sm text-gray-600">
-                <span class="font-medium text-gray-800">{{ session.title }}</span>
+            <h1 class="text-2xl font-bold text-slate-900">Register User to Session</h1>
+            <p class="mt-1 text-sm text-slate-500">
+                <span class="font-medium text-slate-800">{{ session.title }}</span>
                 {% if session.conference %}
                     - {{ session.conference.title }}
                 {% endif %}
@@ -15,20 +15,20 @@
         </div>
 
         {% for message in app.flashes('success') %}
-            <div class="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            <div class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                 {{ message }}
             </div>
         {% endfor %}
         {% for message in app.flashes('error') %}
-            <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div class="mb-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                 {{ message }}
             </div>
         {% endfor %}
 
-        <form method="post" class="space-y-5 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <form method="post" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div>
-                <label for="userId" class="mb-1 block text-sm font-medium text-gray-700">User</label>
-                <select id="userId" name="userId" required class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none ring-blue-500 focus:ring-2">
+                <label for="userId" class="mb-1 block text-sm font-medium text-slate-700">User</label>
+                <select id="userId" name="userId" required class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none ring-indigo-500 focus:ring-2">
                     <option value="">Select user</option>
                     {% for user in users %}
                         <option value="{{ user.id }}">{{ user.name }} ({{ user.email }})</option>
@@ -37,10 +37,10 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-3 pt-2">
-                <button type="submit" class="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+                <button type="submit" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700">
                     Register
                 </button>
-                <a href="{{ path('session_index') }}" class="rounded-md border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50">
+                <a href="{{ path('session_index') }}" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
                     Back
                 </a>
             </div>

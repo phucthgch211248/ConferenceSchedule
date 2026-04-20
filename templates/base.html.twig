@@ -20,14 +20,18 @@
         <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
         {% endif %}
     </head>
-    <body class="min-h-screen bg-gray-50 text-gray-900">
-        <header class="border-b border-gray-200 bg-white">
+    <body class="min-h-screen bg-slate-100 text-slate-900">
+        {% set currentRoute = app.request.attributes.get('_route') %}
+        <header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/90 backdrop-blur">
             <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-                <a href="{{ path('home_index') }}" class="text-lg font-semibold tracking-tight">Conference Scheduler</a>
-                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <a href="{{ path('home_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Home</a>
-                    <a href="{{ path('conference_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Conference</a>
-                    <a href="{{ path('session_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Session</a>
+                <a href="{{ path('home_index') }}" class="inline-flex items-center gap-3">
+                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 text-sm font-bold text-white shadow-md">CS</span>
+                    <span class="text-base font-bold tracking-tight text-slate-800 sm:text-lg">Conference Scheduler</span>
+                </a>
+                <div class="flex flex-wrap items-center gap-2">
+                    <a href="{{ path('home_index') }}" class="rounded-lg px-3 py-2 text-sm font-medium transition {{ currentRoute in ['home_root', 'home_index'] ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-200/70 hover:text-slate-900' }}">Home</a>
+                    <a href="{{ path('conference_index') }}" class="rounded-lg px-3 py-2 text-sm font-medium transition {{ currentRoute starts with 'conference_' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-200/70 hover:text-slate-900' }}">Conference</a>
+                    <a href="{{ path('session_index') }}" class="rounded-lg px-3 py-2 text-sm font-medium transition {{ currentRoute starts with 'session_' or currentRoute starts with 'registration_' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-200/70 hover:text-slate-900' }}">Session</a>
                 </div>
             </nav>
         </header>
