@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Document\Conference;
+use App\Document\Registration;
+use App\Document\Session as ConferenceSession;
 use DateTimeImmutable;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +25,42 @@ class ConferenceController extends AbstractController
 
         return $this->render('conference/index.html.twig', [
             'conferences' => $conferences,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    public function show(string $id, DocumentManager $documentManager): Response
+    {
+        /** @var Conference|null $conference */
+        $conference = $documentManager->find(Conference::class, $id);
+        if (!$conference) {
+            throw $this->createNotFoundException('Conference not found.');
+        }
+
+        // Load all sessions that belong to this conference.
+        $sessions = $documentManager
+            ->getRepository(ConferenceSession::class)
+            ->findBy(['conference' => $conference], ['startTime' => 'ASC']);
+
+        // Build a simple map: sessionId => number of registrations.
+        $sessionRegistrationCounts = [];
+        $registrationRepository = $documentManager->getRepository(Registration::class);
+
+        foreach ($sessions as $session) {
+            $sessionId = $session->getId();
+            if ($sessionId === null) {
+                continue;
+            }
+
+            $sessionRegistrationCounts[$sessionId] = count(
+                $registrationRepository->findBy(['session' => $session])
+            );
+        }
+
+        return $this->render('conference/show.html.twig', [
+            'conference' => $conference,
+            'sessions' => $sessions,
+            'sessionRegistrationCounts' => $sessionRegistrationCounts,
         ]);
     }
 

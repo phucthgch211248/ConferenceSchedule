@@ -49,8 +49,8 @@
                     <span class="font-semibold text-emerald-900">Location:</span> {{ conference.location }}
                 </div>
 
-                <a href="{{ path('conference_edit', {id: conference.id}) }}" class="inline-flex items-center rounded-lg bg-emerald-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
-                    Manage Conference
+                <a href="{{ path('conference_show', {id: conference.id}) }}" class="inline-flex items-center rounded-lg bg-emerald-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
+                    View Detail
                 </a>
             </article>
         {% else %}
