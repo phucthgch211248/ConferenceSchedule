@@ -4,15 +4,22 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
+/**
+ * Registration document.
+ * Links one user to one session (join/association document).
+ */
 #[ODM\Document]
 class Registration
 {
+    // MongoDB ObjectId stored as string in the app layer.
     #[ODM\Id]
     private ?string $id = null;
 
+    // Registered participant.
     #[ODM\ReferenceOne(targetDocument: User::class)]
     private ?User $user = null;
 
+    // Session that the user registers for.
     #[ODM\ReferenceOne(targetDocument: Session::class)]
     private ?Session $session = null;
 

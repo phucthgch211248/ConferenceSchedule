@@ -4,9 +4,14 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
+/**
+ * Conference document.
+ * Represents a main event that can contain many sessions.
+ */
 #[ODM\Document]
 class Conference
 {
+    // MongoDB ObjectId stored as string in the app layer.
     #[ODM\Id]
     private ?string $id = null;
 
@@ -19,6 +24,7 @@ class Conference
     #[ODM\Field(type: 'string')]
     private ?string $location = null;
 
+    // Stored as a MongoDB date; mapped to DateTimeInterface in PHP.
     #[ODM\Field(type: 'date')]
     private ?\DateTimeInterface $date = null;
 

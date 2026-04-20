@@ -4,21 +4,28 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
+/**
+ * Session document.
+ * Represents one timeslot/activity that belongs to a conference.
+ */
 #[ODM\Document]
 class Session
 {
+    // MongoDB ObjectId stored as string in the app layer.
     #[ODM\Id]
     private ?string $id = null;
 
     #[ODM\Field(type: 'string')]
     private ?string $title = null;
 
+    // Stored as MongoDB date values for schedule calculations.
     #[ODM\Field(type: 'date')]
     private ?\DateTimeInterface $startTime = null;
 
     #[ODM\Field(type: 'date')]
     private ?\DateTimeInterface $endTime = null;
 
+    // Many sessions can point to one conference (Session belongs to Conference).
     #[ODM\ReferenceOne(targetDocument: Conference::class)]
     private ?Conference $conference = null;
 

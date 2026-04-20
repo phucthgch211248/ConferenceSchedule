@@ -4,9 +4,14 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
+/**
+ * User document stored in MongoDB.
+ * This model represents a participant who can register for sessions.
+ */
 #[ODM\Document]
 class User
 {
+    // MongoDB ObjectId stored as string in the app layer.
     #[ODM\Id]
     private ?string $id = null;
 

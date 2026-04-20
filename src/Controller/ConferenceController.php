@@ -16,6 +16,7 @@ class ConferenceController extends AbstractController
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(DocumentManager $documentManager): Response
     {
+        // Read all conferences for the management table.
         $conferences = $documentManager
             ->getRepository(Conference::class)
             ->findBy([], ['date' => 'ASC']);
@@ -28,18 +29,21 @@ class ConferenceController extends AbstractController
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     public function create(Request $request, DocumentManager $documentManager): Response
     {
+        // Handle form submit manually (without Symfony Form component).
         if ($request->isMethod('POST')) {
             $title = trim((string) $request->request->get('title', ''));
             $description = trim((string) $request->request->get('description', ''));
             $location = trim((string) $request->request->get('location', ''));
             $dateInput = (string) $request->request->get('date', '');
 
+            // Basic required-field validation.
             if ($title === '' || $description === '' || $location === '' || $dateInput === '') {
                 $this->addFlash('error', 'All fields are required.');
 
                 return $this->redirectToRoute('conference_create');
             }
 
+            // Parse HTML date input (YYYY-MM-DD) into PHP DateTime object.
             $date = DateTimeImmutable::createFromFormat('Y-m-d', $dateInput);
             if (!$date) {
                 $this->addFlash('error', 'Date format is invalid.');
@@ -47,6 +51,7 @@ class ConferenceController extends AbstractController
                 return $this->redirectToRoute('conference_create');
             }
 
+            // Create and save a new conference document.
             $conference = new Conference();
             $conference
                 ->setTitle($title)
@@ -69,6 +74,7 @@ class ConferenceController extends AbstractController
     public function edit(string $id, Request $request, DocumentManager $documentManager): Response
     {
         /** @var Conference|null $conference */
+        // Load document by MongoDB id from route parameter.
         $conference = $documentManager->find(Conference::class, $id);
         if (!$conference) {
             throw $this->createNotFoundException('Conference not found.');
@@ -80,6 +86,7 @@ class ConferenceController extends AbstractController
             $location = trim((string) $request->request->get('location', ''));
             $dateInput = (string) $request->request->get('date', '');
 
+            // Reuse the same input validation rules as create().
             if ($title === '' || $description === '' || $location === '' || $dateInput === '') {
                 $this->addFlash('error', 'All fields are required.');
 
@@ -93,6 +100,7 @@ class ConferenceController extends AbstractController
                 return $this->redirectToRoute('conference_edit', ['id' => $id]);
             }
 
+            // Update existing document and flush changes.
             $conference
                 ->setTitle($title)
                 ->setDescription($description)
@@ -115,11 +123,13 @@ class ConferenceController extends AbstractController
     public function delete(string $id, Request $request, DocumentManager $documentManager): Response
     {
         /** @var Conference|null $conference */
+        // Find document before deleting.
         $conference = $documentManager->find(Conference::class, $id);
         if (!$conference) {
             throw $this->createNotFoundException('Conference not found.');
         }
 
+        // Protect delete action from CSRF attacks.
         $token = (string) $request->request->get('_token', '');
         if (!$this->isCsrfTokenValid('delete_conference_'.$conference->getId(), $token)) {
             $this->addFlash('error', 'Invalid CSRF token.');

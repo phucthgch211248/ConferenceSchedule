@@ -17,6 +17,7 @@ class SessionController extends AbstractController
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(DocumentManager $documentManager): Response
     {
+        // Show sessions in chronological order.
         $sessions = $documentManager
             ->getRepository(ConferenceSession::class)
             ->findBy([], ['startTime' => 'ASC']);
@@ -29,10 +30,12 @@ class SessionController extends AbstractController
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     public function create(Request $request, DocumentManager $documentManager): Response
     {
+        // Sessions must belong to a conference, so load conference choices.
         $conferences = $documentManager
             ->getRepository(Conference::class)
             ->findBy([], ['date' => 'ASC']);
 
+        // Block session creation when there is no parent conference yet.
         if (count($conferences) === 0) {
             $this->addFlash('error', 'Please create a conference first.');
 
@@ -45,12 +48,14 @@ class SessionController extends AbstractController
             $endTimeInput = (string) $request->request->get('endTime', '');
             $conferenceId = (string) $request->request->get('conferenceId', '');
 
+            // Basic required-field validation.
             if ($title === '' || $startTimeInput === '' || $endTimeInput === '' || $conferenceId === '') {
                 $this->addFlash('error', 'All fields are required.');
 
                 return $this->redirectToRoute('session_create');
             }
 
+            // Parse datetime-local input format: YYYY-MM-DDTHH:MM.
             $startTime = DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $startTimeInput);
             $endTime = DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $endTimeInput);
             if (!$startTime || !$endTime) {
@@ -59,6 +64,7 @@ class SessionController extends AbstractController
                 return $this->redirectToRoute('session_create');
             }
 
+            // Business rule: end time must be after start time.
             if ($endTime <= $startTime) {
                 $this->addFlash('error', 'End time must be after start time.');
 
@@ -66,6 +72,7 @@ class SessionController extends AbstractController
             }
 
             /** @var Conference|null $conference */
+            // Resolve selected conference reference.
             $conference = $documentManager->find(Conference::class, $conferenceId);
             if (!$conference) {
                 $this->addFlash('error', 'Conference not found.');
@@ -73,6 +80,7 @@ class SessionController extends AbstractController
                 return $this->redirectToRoute('session_create');
             }
 
+            // Save session linked to its parent conference.
             $session = new ConferenceSession();
             $session
                 ->setTitle($title)
@@ -97,6 +105,7 @@ class SessionController extends AbstractController
     public function edit(string $id, Request $request, DocumentManager $documentManager): Response
     {
         /** @var ConferenceSession|null $session */
+        // Load session to edit.
         $session = $documentManager->find(ConferenceSession::class, $id);
         if (!$session) {
             throw $this->createNotFoundException('Session not found.');
@@ -118,6 +127,7 @@ class SessionController extends AbstractController
             $endTimeInput = (string) $request->request->get('endTime', '');
             $conferenceId = (string) $request->request->get('conferenceId', '');
 
+            // Reuse create() validations for consistency.
             if ($title === '' || $startTimeInput === '' || $endTimeInput === '' || $conferenceId === '') {
                 $this->addFlash('error', 'All fields are required.');
 
@@ -146,6 +156,7 @@ class SessionController extends AbstractController
                 return $this->redirectToRoute('session_edit', ['id' => $id]);
             }
 
+            // Update and persist changes.
             $session
                 ->setTitle($title)
                 ->setStartTime($startTime)
@@ -169,11 +180,13 @@ class SessionController extends AbstractController
     public function delete(string $id, Request $request, DocumentManager $documentManager): Response
     {
         /** @var ConferenceSession|null $session */
+        // Load session before delete.
         $session = $documentManager->find(ConferenceSession::class, $id);
         if (!$session) {
             throw $this->createNotFoundException('Session not found.');
         }
 
+        // Protect delete action from CSRF attacks.
         $token = (string) $request->request->get('_token', '');
         if (!$this->isCsrfTokenValid('delete_session_'.$session->getId(), $token)) {
             $this->addFlash('error', 'Invalid CSRF token.');

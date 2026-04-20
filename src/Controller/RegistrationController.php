@@ -17,15 +17,18 @@ class RegistrationController extends AbstractController
     public function register(string $sessionId, Request $request, DocumentManager $documentManager): Response
     {
         /** @var Session|null $session */
+        // Load target session from URL.
         $session = $documentManager->find(Session::class, $sessionId);
         if (!$session) {
             throw $this->createNotFoundException('Session not found.');
         }
 
+        // Load users to populate registration dropdown.
         $users = $documentManager
             ->getRepository(User::class)
             ->findBy([], ['name' => 'ASC']);
 
+        // Registration requires at least one existing user.
         if (count($users) === 0) {
             $this->addFlash('error', 'Please create a user first.');
 
@@ -41,6 +44,7 @@ class RegistrationController extends AbstractController
             }
 
             /** @var User|null $user */
+            // Resolve selected user reference.
             $user = $documentManager->find(User::class, $userId);
             if (!$user) {
                 $this->addFlash('error', 'Selected user was not found.');
@@ -48,6 +52,7 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('registration_register', ['sessionId' => $sessionId]);
             }
 
+            // Prevent duplicate registration for the same user and session.
             $existingRegistration = $documentManager
                 ->getRepository(Registration::class)
                 ->findOneBy([
@@ -61,6 +66,7 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('registration_register', ['sessionId' => $sessionId]);
             }
 
+            // Create join document: user <-> session.
             $registration = new Registration();
             $registration
                 ->setUser($user)
