@@ -23,11 +23,11 @@
     <body class="min-h-screen bg-gray-50 text-gray-900">
         <header class="border-b border-gray-200 bg-white">
             <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-                <a href="/" class="text-lg font-semibold tracking-tight">Conference Scheduler</a>
+                <a href="{{ path('home_index') }}" class="text-lg font-semibold tracking-tight">Conference Scheduler</a>
                 <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <a href="/" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Home</a>
-                    <a href="/conference" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Conference</a>
-                    <a href="/session" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Session</a>
+                    <a href="{{ path('home_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Home</a>
+                    <a href="{{ path('conference_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Conference</a>
+                    <a href="{{ path('session_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900">Session</a>
                 </div>
             </nav>
         </header>
