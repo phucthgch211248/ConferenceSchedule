@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
+    #[Route('/', name: 'home_root', methods: ['GET'])]
     #[Route('/home', name: 'home_index', methods: ['GET'])]
     public function index(DocumentManager $documentManager): Response
     {
