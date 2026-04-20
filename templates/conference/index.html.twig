@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conferences{% endblock %}
+
+{% block body %}
+    <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-bold">Conference List</h1>
+            <p class="text-sm text-gray-600">Manage all conference records.</p>
+        </div>
+        <a href="{{ path('conference_create') }}" class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+            Create Conference
+        </a>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Title</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Location</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Date</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 bg-white">
+                    {% for conference in conferences %}
+                        <tr>
+                            <td class="px-4 py-3">
+                                <p class="font-medium text-gray-900">{{ conference.title }}</p>
+                                <p class="mt-1 text-sm text-gray-600">{{ conference.description }}</p>
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-700">{{ conference.location }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-700">
+                                {{ conference.date ? conference.date|date('Y-m-d') : '-' }}
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="{{ path('conference_edit', {id: conference.id}) }}" class="rounded-md bg-amber-500 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-amber-600">
+                                        Edit
+                                    </a>
+                                    <form method="post" action="{{ path('conference_delete', {id: conference.id}) }}" onsubmit="return confirm('Delete this conference?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete_conference_' ~ conference.id) }}">
+                                        <button type="submit" class="rounded-md bg-red-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-red-700">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="px-4 py-8 text-center text-sm text-gray-500">
+                                No conferences found.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
