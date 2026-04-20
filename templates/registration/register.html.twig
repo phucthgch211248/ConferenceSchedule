@@ -5,9 +5,9 @@
 {% block body %}
     <div class="mx-auto w-full max-w-2xl">
         <div class="mb-6">
-            <h1 class="text-2xl font-bold text-slate-900">Register User to Session</h1>
-            <p class="mt-1 text-sm text-slate-500">
-                <span class="font-medium text-slate-800">{{ session.title }}</span>
+            <h1 class="text-2xl font-bold text-emerald-950">Register User to Session</h1>
+            <p class="mt-1 text-sm text-emerald-700">
+                <span class="font-medium text-emerald-900">{{ session.title }}</span>
                 {% if session.conference %}
                     - {{ session.conference.title }}
                 {% endif %}
@@ -25,10 +25,10 @@
             </div>
         {% endfor %}
 
-        <form method="post" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <form method="post" class="space-y-5 rounded-2xl border border-emerald-200 bg-white p-6 shadow-sm">
             <div>
-                <label for="userId" class="mb-1 block text-sm font-medium text-slate-700">User</label>
-                <select id="userId" name="userId" required class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none ring-indigo-500 focus:ring-2">
+                <label for="userId" class="mb-1 block text-sm font-medium text-emerald-800">User</label>
+                <select id="userId" name="userId" required class="w-full rounded-lg border border-emerald-300 bg-white px-3 py-2.5 text-sm text-emerald-900 outline-none ring-emerald-600 focus:ring-2">
                     <option value="">Select user</option>
                     {% for user in users %}
                         <option value="{{ user.id }}">{{ user.name }} ({{ user.email }})</option>
@@ -37,10 +37,10 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-3 pt-2">
-                <button type="submit" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700">
+                <button type="submit" class="rounded-lg bg-emerald-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
                     Register
                 </button>
-                <a href="{{ path('session_index') }}" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                <a href="{{ path('session_index') }}" class="rounded-lg border border-emerald-300 px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-50">
                     Back
                 </a>
             </div>

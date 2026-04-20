@@ -5,10 +5,10 @@
 {% block body %}
     <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-slate-900">Session Management</h1>
-            <p class="text-sm text-slate-500">Manage session schedules for conferences.</p>
+            <h1 class="text-2xl font-bold text-emerald-950">Session Management</h1>
+            <p class="text-sm text-emerald-700">Manage session schedules for conferences.</p>
         </div>
-        <a href="{{ path('session_create') }}" class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700">
+        <a href="{{ path('session_create') }}" class="inline-flex items-center justify-center rounded-lg bg-emerald-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800">
             + Create Session
         </a>
     </div>
@@ -24,29 +24,29 @@
         </div>
     {% endfor %}
 
-    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div class="overflow-hidden rounded-2xl border border-emerald-200 bg-white shadow-sm">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-slate-200">
-                <thead class="bg-slate-50">
+            <table class="min-w-full divide-y divide-emerald-200">
+                <thead class="bg-emerald-50">
                     <tr>
-                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Title</th>
-                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Conference</th>
-                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Start</th>
-                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">End</th>
-                        <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">Actions</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-emerald-800">Title</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-emerald-800">Conference</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-emerald-800">Start</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-emerald-800">End</th>
+                        <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-emerald-800">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 bg-white">
+                <tbody class="divide-y divide-emerald-100 bg-white">
                     {% for session in sessions %}
-                        <tr class="transition hover:bg-slate-50">
-                            <td class="px-5 py-4 text-sm font-semibold text-slate-900">{{ session.title }}</td>
-                            <td class="px-5 py-4 text-sm text-slate-700">
+                        <tr class="transition hover:bg-emerald-50">
+                            <td class="px-5 py-4 text-sm font-semibold text-emerald-950">{{ session.title }}</td>
+                            <td class="px-5 py-4 text-sm text-emerald-800">
                                 {{ session.conference ? session.conference.title : '-' }}
                             </td>
-                            <td class="px-5 py-4 text-sm text-slate-700">
+                            <td class="px-5 py-4 text-sm text-emerald-800">
                                 {{ session.startTime ? session.startTime|date('Y-m-d H:i') : '-' }}
                             </td>
-                            <td class="px-5 py-4 text-sm text-slate-700">
+                            <td class="px-5 py-4 text-sm text-emerald-800">
                                 {{ session.endTime ? session.endTime|date('Y-m-d H:i') : '-' }}
                             </td>
                             <td class="px-5 py-4">
@@ -68,7 +68,7 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="5" class="px-5 py-10 text-center text-sm text-slate-500">
+                            <td colspan="5" class="px-5 py-10 text-center text-sm text-emerald-700">
                                 No sessions found.
                             </td>
                         </tr>

@@ -5,10 +5,10 @@
 {% block body %}
     <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-slate-900">Conference Management</h1>
-            <p class="text-sm text-slate-500">Manage all conference records.</p>
+            <h1 class="text-2xl font-bold text-emerald-950">Conference Management</h1>
+            <p class="text-sm text-emerald-700">Manage all conference records.</p>
         </div>
-        <a href="{{ path('conference_create') }}" class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700">
+        <a href="{{ path('conference_create') }}" class="inline-flex items-center justify-center rounded-lg bg-emerald-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800">
             + Create Conference
         </a>
     </div>
@@ -24,27 +24,27 @@
         </div>
     {% endfor %}
 
-    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div class="overflow-hidden rounded-2xl border border-emerald-200 bg-white shadow-sm">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-slate-200">
-                <thead class="bg-slate-50">
+            <table class="min-w-full divide-y divide-emerald-200">
+                <thead class="bg-emerald-50">
                     <tr>
-                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Title</th>
-                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Location</th>
-                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Date</th>
-                        <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">Actions</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-emerald-800">Title</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-emerald-800">Location</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-emerald-800">Date</th>
+                        <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-emerald-800">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 bg-white">
+                <tbody class="divide-y divide-emerald-100 bg-white">
                     {% for conference in conferences %}
-                        <tr class="transition hover:bg-slate-50">
+                        <tr class="transition hover:bg-emerald-50">
                             <td class="px-5 py-4">
-                                <p class="font-semibold text-slate-900">{{ conference.title }}</p>
-                                <p class="mt-1 text-sm text-slate-500">{{ conference.description }}</p>
+                                <p class="font-semibold text-emerald-950">{{ conference.title }}</p>
+                                <p class="mt-1 text-sm text-emerald-700">{{ conference.description }}</p>
                             </td>
-                            <td class="px-5 py-4 text-sm text-slate-700">{{ conference.location }}</td>
+                            <td class="px-5 py-4 text-sm text-emerald-800">{{ conference.location }}</td>
                             <td class="px-5 py-4 text-sm">
-                                <span class="rounded-full bg-indigo-100 px-2.5 py-1 font-medium text-indigo-700">
+                                <span class="rounded-full bg-emerald-100 px-2.5 py-1 font-medium text-emerald-800">
                                     {{ conference.date ? conference.date|date('Y-m-d') : '-' }}
                                 </span>
                             </td>
@@ -64,7 +64,7 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="4" class="px-5 py-10 text-center text-sm text-slate-500">
+                            <td colspan="4" class="px-5 py-10 text-center text-sm text-emerald-700">
                                 No conferences found.
                             </td>
                         </tr>
